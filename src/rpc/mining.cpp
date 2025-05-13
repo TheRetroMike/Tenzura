@@ -734,6 +734,30 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         }
     }
 
+    if (pindexPrev->nHeight + 1 > 0) {  // Skip for genesis block
+        UniValue devfeeObj(UniValue::VOBJ);
+        CAmount blockReward = GetBlockSubsidy(pindexPrev->nHeight + 1, consensusParams);
+        
+        // Calculate total fees from transactions in the template
+        CAmount nFees = 0;
+        for (unsigned int i = 0; i < pblocktemplate->vTxFees.size(); i++) {
+            nFees += pblocktemplate->vTxFees[i];
+        }
+        
+        CAmount totalReward = blockReward + nFees;
+        CAmount devFeeValue = totalReward * consensusParams.devFeePercent / 100;
+
+        devfeeObj.push_back(Pair("required", true));
+        devfeeObj.push_back(Pair("percent", consensusParams.devFeePercent));
+        devfeeObj.push_back(Pair("amount", ValueFromAmount(devFeeValue)));
+        devfeeObj.push_back(Pair("script", HexStr(consensusParams.devFeeScript.begin(), consensusParams.devFeeScript.end())));
+        
+        // Indicate that the coinbase must have at least 2 outputs - miner + devfee
+        devfeeObj.push_back(Pair("coinbase_outputs", 2));
+        
+        result.push_back(Pair("devfee", devfeeObj));
+    }
+
     return result;
 }
 
