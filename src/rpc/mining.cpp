@@ -687,7 +687,11 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
     result.push_back(Pair("transactions", transactions));
     result.push_back(Pair("coinbaseaux", aux));
-    result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0]->vout[0].nValue));
+    CAmount totalReward = 0;
+    for (size_t i = 0; i < pblock->vtx[0]->vout.size(); i++) {
+        totalReward += pblock->vtx[0]->vout[i].nValue;
+    }
+    result.push_back(Pair("coinbasevalue", (int64_t)totalReward));
     result.push_back(Pair("longpollid", chainActive.Tip()->GetBlockHash().GetHex() + i64tostr(nTransactionsUpdatedLast)));
     result.push_back(Pair("target", hashTarget.GetHex()));
     result.push_back(Pair("mintime", (int64_t)pindexPrev->GetMedianTimePast()+1));
