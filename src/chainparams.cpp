@@ -124,7 +124,7 @@ CMainParams() {
         consensus.nSegwitEnabled = true;
         consensus.nCSVEnabled = true;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.kawpowLimit = uint256S("0000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // Estimated starting diff for first 180 kawpow blocks
+        consensus.kawpowLimit = uint256S("000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // Estimated starting diff for first 180 kawpow blocks
         consensus.nPowTargetTimespan = 2016 * 60; // 1.4 days
         consensus.nPowTargetSpacing = 1 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -196,16 +196,17 @@ CMainParams() {
         nDefaultPort = 9767;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1746939871, 9870449, 0x1e00ffff, 4, 5000 * COIN);
+        genesis = CreateGenesisBlock(1747217362, 10034583, 0x1e00ffff, 4, 5000 * COIN);
 
         consensus.hashGenesisBlock = genesis.GetX16RHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0x000000fc97d252171b819a13650a60dfd6bce056cf135bc671286a070478a7c5"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000007754bb9a3f62a2928f7283570fb8084abf2f28020e0a6ab069e929b2a3"));
         assert(genesis.hashMerkleRoot == uint256S("895948d53a9aaf2781f2130338ed1c9eb50be05184c1c96077066cb852d52ebc"));
 
          vSeeds.emplace_back("seed0.tenzura.io", false);
          vSeeds.emplace_back("sg.seed0.tenzura.io", false);
          vSeeds.emplace_back("seed1.tenzura.io", false);
+         vSeeds.emplace_back("us.seed.tenzura.io", false);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,66);  // T prefix for TENZ addresses
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,92);  // t prefix for script addresses
@@ -277,7 +278,7 @@ CMainParams() {
         nMessagingActivationBlock = 1; // Messaging activated block height
         nRestrictedActivationBlock = 1; // Restricted activated block height
 
-        nKAAAWWWPOWActivationTime = 1747047871; // UTC: Mon May 12 2025 15:44:31
+        nKAAAWWWPOWActivationTime = 1747231762; // UTC: Tue May 14 2025 15:44:22
         nKAWPOWActivationTime = nKAAAWWWPOWActivationTime;
         /** TENZ End **/
     }
