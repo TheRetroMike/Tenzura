@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 RUN apt-get update -y
 RUN apt-get install wget build-essential -y
 WORKDIR /opt/
